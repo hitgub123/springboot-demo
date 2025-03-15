@@ -62,7 +62,7 @@ jobs:
             # 停止现有进程（可选）
             sudo pkill -f 'java -jar' || true
             
-            # 运行 JAR
-            nohup java -jar demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+            # 运行 JAR, 80 端口是特权端口（<1024），非 root 用户无法绑定，需要 sudo。
+            sudo nohup java -jar demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
             # java -jar demo-0.0.1-SNAPSHOT.jar -ccc="c from cmd"
           EOF
