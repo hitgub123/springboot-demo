@@ -43,9 +43,10 @@ jobs:
           chmod 400 private_key.pem
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
 
-            sudo apt update -y
-            sudo apt install openjdk-17-jdk -y -qq
-            # sudo yum install java-17-amazon-corretto -y
+            # sudo apt update -y
+            # sudo apt install openjdk-17-jdk -y -qq
+            sudo yum update -y
+            sudo yum install java-17-amazon-corretto -y
             # # 安装 AWS CLI（若未安装）
             # sudo apt install awscli -y -qq
             # # 配置 AWS 凭据（临时）
