@@ -33,11 +33,30 @@ jobs:
         run: |
           aws s3 cp target/demo-0.0.1-SNAPSHOT.jar s3://${{ secrets.S3_BUCKET4SPRINGBOOT }}/demo-0.0.1-SNAPSHOT.jar
       
-      - name: S3 to EC2
+      - name: Deploy to EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
         run: |
-          cd /home/springboot
-          aws s3 cp s3://${{ secrets.S3_BUCKET4SPRINGBOOT }}/demo-0.0.1-SNAPSHOT.jar ./
+          echo "$EC2_SSH_KEY" > private_key.pem
+          chmod 400 private_key.pem
+          ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
 
-      - name: run java
-        run: |
-          java -jar demo-0.0.1-SNAPSHOT.jar --ccc="c from cmd"
+            sudo apt update -y
+            sudo apt install openjdk-17-jdk -y -qq
+            # sudo yum install java-17-amazon-corretto -y
+            # # 安装 AWS CLI（若未安装）
+            # sudo apt install awscli -y -qq
+            # # 配置 AWS 凭据（临时）
+            # aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+            # aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            # aws configure set region ${{ secrets.AWS_REGION }}
+            # 下载 JAR
+            aws s3 cp s3://${{ secrets.S3_BUCKET }}/demo-0.0.1-SNAPSHOT.jar .
+            # 停止现有进程（可选）
+            pkill -f 'java -jar' || true
+            # 运行 JAR
+            # nohup java -jar demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+            java -jar demo-0.0.1-SNAPSHOT.jar -ccc="c from cmd"
+          EOF
