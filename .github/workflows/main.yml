@@ -55,7 +55,8 @@ jobs:
             # aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
             # aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             # aws configure set region ${{ secrets.AWS_REGION }}
-            
+
+            cd /home/springboot
             # 下载 JAR
             aws s3 cp s3://${{ secrets.S3_BUCKET4SPRINGBOOT }}/demo-0.0.1-SNAPSHOT.jar .
             
