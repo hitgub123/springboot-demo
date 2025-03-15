@@ -1,4 +1,4 @@
-name: Build and Deploy to S3
+name: Build and Send to S3 and Deploy to EC2
 
 on:
   push:
@@ -47,16 +47,21 @@ jobs:
             # sudo apt install openjdk-17-jdk -y -qq
             sudo yum update -y
             sudo yum install java-17-amazon-corretto -y
+            
             # # 安装 AWS CLI（若未安装）
             # sudo apt install awscli -y -qq
+            
             # # 配置 AWS 凭据（临时）
             # aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
             # aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             # aws configure set region ${{ secrets.AWS_REGION }}
+            
             # 下载 JAR
-            aws s3 cp s3://${{ secrets.S3_BUCKET }}/demo-0.0.1-SNAPSHOT.jar .
+            aws s3 cp s3://${{ secrets.S3_BUCKET4SPRINGBOOT }}/demo-0.0.1-SNAPSHOT.jar .
+            
             # 停止现有进程（可选）
             pkill -f 'java -jar' || true
+            
             # 运行 JAR
             # nohup java -jar demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
             java -jar demo-0.0.1-SNAPSHOT.jar -ccc="c from cmd"
