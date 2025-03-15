@@ -16,7 +16,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11'  # 使用你需要的 Java 版本
+          java-version: '21'  # 使用你需要的 Java 版本
           distribution: 'adopt'
 
       - name: Build with Maven
