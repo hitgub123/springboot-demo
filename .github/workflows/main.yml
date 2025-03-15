@@ -60,9 +60,9 @@ jobs:
             aws s3 cp s3://${{ secrets.S3_BUCKET4SPRINGBOOT }}/demo-0.0.1-SNAPSHOT.jar .
             
             # 停止现有进程（可选）
-            pkill -f 'java -jar' || true
+            sudo pkill -f 'java -jar' || true
             
             # 运行 JAR
-            # nohup java -jar demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
-            java -jar demo-0.0.1-SNAPSHOT.jar -ccc="c from cmd"
+            nohup java -jar demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+            # java -jar demo-0.0.1-SNAPSHOT.jar -ccc="c from cmd"
           EOF
