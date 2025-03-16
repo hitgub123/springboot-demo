@@ -1,0 +1,6 @@
+# application.yml
+aws:
+  region: ap-northeast-1
+  dynamodb:
+    endpoint: https://dynamodb.ap-northeast-1.amazonaws.com
+    
