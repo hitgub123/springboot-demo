@@ -3,7 +3,7 @@ name: Build and Send to S3 and Deploy to EC2
 on:
   push:
     branches:
-      - main  # 或你想要触发构建的分支
+       - mainXXXXXX      # 或你想要触发构建的分支
 
 jobs:
   build:
